@@ -1,0 +1,179 @@
+/* Fondo transparente del chat cuando está dentro de la ventana de cristal.
+   Los selectores de Twitch cambian con el tiempo: si algo vuelve a verse opaco,
+   inspecciónalo en el iframe y añade su clase aquí. */
+
+html.tec-embedded {
+  color-scheme: normal !important;
+  background: transparent !important;
+
+  /* Variables de tema de Twitch */
+  --color-background-base: transparent !important;
+  --color-background-body: transparent !important;
+  --color-background-alt: transparent !important;
+  --color-background-alt-2: rgba(255, 255, 255, 0.06) !important;
+  --color-background-float: rgba(20, 20, 28, 0.6) !important;
+  --color-background-input: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.tec-embedded body,
+html.tec-embedded #root,
+html.tec-embedded .tw-root--theme-dark,
+html.tec-embedded .tw-root--theme-light,
+html.tec-embedded .tw-root--hover,
+html.tec-embedded .chat-room,
+html.tec-embedded .chat-room__content,
+html.tec-embedded .chat-shell,
+html.tec-embedded .stream-chat,
+html.tec-embedded .chat-list--default,
+html.tec-embedded .chat-list--other,
+html.tec-embedded .scrollable-area,
+html.tec-embedded .simplebar-content-wrapper,
+html.tec-embedded .chat-input,
+html.tec-embedded .stream-chat-header {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Legibilidad sobre el vídeo */
+html.tec-embedded .chat-line__message,
+html.tec-embedded .chat-line__timestamp,
+html.tec-embedded .text-fragment {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 0.8);
+}
+
+/* La barra de la ventana ya tiene título */
+html.tec-embedded .stream-chat-header { display: none !important; }
+
+/* Emotes de 7TV/BTTV insertados por la extensión */
+html.tec-embedded .tec-emote {
+  height: 2em;
+  width: auto;
+  vertical-align: middle;
+  margin: -0.5em 2px;
+}
+
+/* Oculta la zona superior del chat: ranking de regalos/bits, destacados de la
+   comunidad, mensaje fijado, hype train... */
+html.tec-embedded .channel-leaderboard,
+html.tec-embedded [data-test-selector="channel-leaderboard-container"],
+html.tec-embedded .leaderboard-header,
+html.tec-embedded .community-highlight-stack,
+html.tec-embedded .community-highlight-stack__card,
+html.tec-embedded .community-highlight,
+html.tec-embedded .pinned-chat__pinned-message,
+html.tec-embedded [class*="leaderboard"],
+html.tec-embedded [class*="community-highlight"],
+html.tec-embedded [class*="hype-train"] {
+  display: none !important;
+}
+
+/* Regla genérica: cualquier bloque que esté antes de la lista de mensajes dentro de la sala.
+   Cubre las clases que Twitch cambie o no conozcamos. */
+html.tec-embedded .chat-room__content > :has(~ .chat-list--default),
+html.tec-embedded .chat-room__content > :has(~ .chat-list--other) {
+  display: none !important;
+}
+
+/* Menús desplegables (ajustes del chat, selector de emotes, tarjeta de usuario, modales):
+   fondo oscuro sólido en lugar del cristal. Se restauran los colores de tema de Twitch
+   solo dentro de ellos, para que sus hijos también se pinten opacos. */
+html.tec-embedded .tw-balloon,
+html.tec-embedded .chat-settings__popover,
+html.tec-embedded .emote-picker,
+html.tec-embedded .viewer-card,
+html.tec-embedded .ReactModal__Content,
+html.tec-embedded [role="dialog"] > *,
+html.tec-embedded [role="menu"] {
+  --color-background-base: #18181b !important;
+  --color-background-body: #0e0e10 !important;
+  --color-background-alt: #1f1f23 !important;
+  --color-background-alt-2: #26262c !important;
+  --color-background-float: #18181b !important;
+  --color-background-input: #26262c !important;
+  background-color: #18181b !important;
+  color: #efeff1;
+  text-shadow: none !important;
+}
+
+/* Las zonas internas que antes se forzaban a transparente (listas con scroll, cabeceras)
+   dentro de un menú heredan el fondo oscuro del menú. */
+html.tec-embedded .tw-balloon .scrollable-area,
+html.tec-embedded .tw-balloon .simplebar-content-wrapper,
+html.tec-embedded .chat-settings__popover .scrollable-area,
+html.tec-embedded .chat-settings__popover .simplebar-content-wrapper,
+html.tec-embedded .chat-settings__header,
+html.tec-embedded .chat-settings__content,
+html.tec-embedded .emote-picker__search-content-dark {
+  background-color: #18181b !important;
+}
+
+/* OJO: .chat-room__viewer-card es un contenedor permanente que cubre TODO el chat.
+   No se le puede dar fondo; solo se restauran las variables de color para la tarjeta
+   que aparece dentro de él. */
+html.tec-embedded .chat-room__viewer-card {
+  --color-background-base: #18181b !important;
+  --color-background-alt: #1f1f23 !important;
+  --color-background-alt-2: #26262c !important;
+  --color-background-float: #18181b !important;
+  background: transparent !important;
+}
+
+/* Botones de Bits (Cheer) y del selector de emotes junto al campo de mensaje.
+   Se oculta también su contenedor directo si solo contiene el botón. */
+html.tec-embedded .chat-input [data-a-target="bits-button"],
+html.tec-embedded .chat-input [data-a-target="emote-picker-button"],
+html.tec-embedded .chat-input *:has(> [data-a-target="bits-button"]:only-child),
+html.tec-embedded .chat-input *:has(> [data-a-target="emote-picker-button"]:only-child) {
+  display: none !important;
+}
+
+/* Avisos de "chat solo para seguidores/suscriptores" (los marca embedded.js por su texto). */
+html.tec-embedded .tec-hidden-notice,
+html.tec-embedded .chat-room__notifications {
+  display: none !important;
+}
+
+/* Mensajes informativos encima del campo de texto (cola de "callouts" de Twitch):
+   aviso de chat solo para seguidores/suscriptores, consejos, etc. */
+html.tec-embedded [data-test-selector="chat-private-callout-queue__callout-container"],
+html.tec-embedded .chat-input .tw-callout,
+html.tec-embedded .chat-input .tw-callout__close {
+  display: none !important;
+}
+
+/* Área de escritura (input, puntos del canal, ajustes y botón de enviar):
+   oculta por defecto; el botón inferior la despliega. */
+html.tec-embedded.tec-input-collapsed .chat-input {
+  display: none !important;
+}
+
+/* Deja sitio abajo para la franja del botón. El contenido de Twitch cuelga de un
+   contenedor absoluto dentro de #root (que mide 0 de alto), así que se reserva ahí. */
+html.tec-embedded #root > div {
+  bottom: 26px !important;
+  height: auto !important;
+}
+
+#tec-input-toggle {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 26px;
+  z-index: 2147483000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.85);
+  font: 600 12px/1 "Inter", "Segoe UI", system-ui, sans-serif;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+#tec-input-toggle:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+#tec-input-toggle svg { display: block; transition: transform 0.2s ease; }
+#tec-input-toggle.tec-open svg { transform: rotate(180deg); }

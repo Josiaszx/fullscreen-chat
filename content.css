@@ -1,0 +1,133 @@
+#tec-root {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2147483000;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  --tec-a: 0.35;
+}
+
+#tec-root .tec-win {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  overflow: hidden;
+  border-radius: 14px;
+  background: rgba(16, 16, 24, var(--tec-a));
+  /* Sin backdrop-filter por defecto: desenfocar el vídeo en cada fotograma es muy caro.
+     content.js lo activa solo si el usuario sube el desenfoque en el panel. */
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#tec-root .tec-bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+}
+#tec-root .tec-bar:active { cursor: grabbing; }
+#tec-root .tec-title { flex: 1; font-weight: 600; letter-spacing: 0.03em; }
+
+#tec-root .tec-btn.tec-active { background: rgba(191, 148, 255, 0.35); }
+
+/* Control de opacidad que se despliega bajo el botón de brillo */
+#tec-root .tec-pop {
+  position: absolute;
+  top: 40px;
+  right: 8px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 12px;
+  background: rgba(20, 20, 26, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+#tec-root .tec-pop[hidden] { display: none; }
+#tec-root .tec-row { display: flex; align-items: center; gap: 8px; }
+#tec-root .tec-lbl { width: 66px; color: rgba(255, 255, 255, 0.75); }
+#tec-root .tec-pop input[type="range"] { width: 110px; accent-color: #bf94ff; cursor: pointer; }
+#tec-root .tec-val { min-width: 34px; text-align: right; font-variant-numeric: tabular-nums; }
+
+#tec-root .tec-btn {
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  line-height: 1;
+}
+#tec-root .tec-btn {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  font-size: 13px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+#tec-root .tec-btn svg { display: block; }
+#tec-root .tec-btn:hover { background: rgba(255, 255, 255, 0.25); }
+
+#tec-root .tec-frame {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  background: transparent;
+  color-scheme: normal;
+}
+
+#tec-root .tec-grip {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 18px;
+  height: 18px;
+  cursor: nwse-resize;
+  touch-action: none;
+  background:
+    linear-gradient(135deg, transparent 55%, rgba(255, 255, 255, 0.45) 55%, rgba(255, 255, 255, 0.45) 62%,
+      transparent 62%, transparent 74%, rgba(255, 255, 255, 0.45) 74%, rgba(255, 255, 255, 0.45) 81%, transparent 81%);
+}
+
+/* Chat oculto (se controla con el botón del reproductor o Alt+C) */
+#tec-root.tec-hidden .tec-win { display: none; }
+
+
+/* Botón en la barra de controles del reproductor (fuera de #tec-root) */
+#tec-toggle {
+  width: 30px;
+  height: 30px;
+  margin: 0 2px;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+}
+#tec-toggle:hover { background: rgba(255, 255, 255, 0.2); color: #fff; }
+#tec-toggle.tec-on { color: #bf94ff; }
+
+/* Fuera de pantalla completa el chat y su botón no se muestran */
+#tec-root.tec-nofs { display: none; }
+#tec-toggle[hidden] { display: none; }

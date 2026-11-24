@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Twitch Glass Chat",
+  "version": "0.2.0",
+  "description": "Chat de Twitch como ventana de cristal semitransparente dentro del reproductor, visible en pantalla completa.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://api.ivr.fi/*",
+    "https://7tv.io/*",
+    "https://api.betterttv.net/*",
+    "https://api.frankerfacez.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.twitch.tv/*"],
+      "exclude_matches": [
+        "https://www.twitch.tv/popout/*",
+        "https://www.twitch.tv/embed/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.twitch.tv/embed/*/chat*",
+        "https://www.twitch.tv/popout/*/chat*"
+      ],
+      "js": ["embedded.js"],
+      "css": ["embedded.css"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ]
+}
